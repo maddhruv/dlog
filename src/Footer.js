@@ -1,10 +1,10 @@
-import React from 'react';
+import React from 'react'
 
 class Footer extends React.Component {
   render () {
     return (
       <footer>
-        <a href="https://github.com/maddhruv">I made it! ✋</a>
+        <a href='https://github.com/maddhruv'>I made it! ✋</a>
       </footer>
     )
   }

@@ -1,7 +1,7 @@
-import React from 'react';
-import Header from './Header';
-import Footer from './Footer';
-import jwt from 'jsonwebtoken';
+import React from 'react'
+import Header from './Header'
+import Footer from './Footer'
+import jwt from 'jsonwebtoken'
 
 class Blog extends React.Component {
   constructor () {
@@ -31,21 +31,21 @@ class Blog extends React.Component {
 
   render () {
     return (
-      <div className="App">
+      <div className='App'>
         <Header />
         <main>
-          <div className="card">
+          <div className='card'>
             {
               this.state.title ? <>
-                <h5 id="share" onClick={this.copy}>Share</h5>
-                <h2 id="title">{this.state.title}</h2>
-                <h4 id="author">{this.state.author}</h4>
+                <h5 id='share' onClick={this.copy}>Share</h5>
+                <h2 id='title'>{this.state.title}</h2>
+                <h4 id='author'>{this.state.author}</h4>
                 <p>{this.state.blog}</p>
               </> : <>
                 <h3> 😣 OOPs! The blog was not found</h3>
               </>
             }
-            
+
           </div>
         </main>
         <Footer />
