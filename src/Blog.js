@@ -1,21 +1,23 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Header from './Header'
 import Footer from './Footer'
 import jwt from 'jsonwebtoken'
 
-class Blog extends React.Component {
-  constructor () {
-    super()
-    this.state = {
-      title: null,
-      author: null,
-      blog: null,
-      date: null
-    }
-    this.copy = this.copy.bind(this)
-  }
+function Blog (props) {
+  const [title, setTitle] = useState(null)
+  const [author, setAuthor] = useState(null)
+  const [blog, setBlog] = useState(null)
+  const [date, setDate] = useState(null)
 
-  copy () {
+  useEffect(() => {
+    const { title, author, blog, date } = jwt.decode(props.match.params.hash, 'dlog')
+    setTitle(title)
+    setAuthor(author)
+    setBlog(blog)
+    setDate(date)
+  })
+
+  function copy () {
     const el = document.createElement('textarea')
     el.value = window.location.href
     document.body.appendChild(el)
@@ -25,33 +27,26 @@ class Blog extends React.Component {
     document.body.removeChild(el)
   }
 
-  componentWillMount () {
-    this.setState(jwt.decode(this.props.match.params.hash, 'dlog'))
-  }
-
-  render () {
-    return (
-      <div className='App'>
-        <Header />
-        <main>
-          <div className='card'>
-            {
-              this.state.title ? <>
-                <h5 id='share' onClick={this.copy}>Share</h5>
-                <h2 id='title'>{this.state.title}</h2>
-                <h4 id='author'>{this.state.author}</h4>
-                <p>{this.state.blog}</p>
+  return (
+    <div className='App'>
+      <Header />
+      <main>
+        <div className='card'>
+          {
+            title ? <>
+              <h5 id='share' onClick={copy}>Share</h5>
+              <h2 id='title'>{title}</h2>
+              <h4 id='author'>{author}</h4>
+              <p>{blog}</p>
               </> : <>
                 <h3> 😣 OOPs! The blog was not found</h3>
               </>
-            }
-
-          </div>
-        </main>
-        <Footer />
-      </div>
-    )
-  }
+          }
+        </div>
+      </main>
+      <Footer />
+    </div>
+  )
 }
 
 export default Blog
