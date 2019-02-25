@@ -4,27 +4,15 @@ import Footer from './Footer'
 import jwt from 'jsonwebtoken'
 
 function New (props) {
-  const [title, setTitle] = useState(null)
-  const [author, setAuthor] = useState(null)
-  const [blog, setBlog] = useState(null)
-
-  function handleTitleChange (e) {
-    setTitle(e.target.value)
-  }
-
-  function handleAuthorChange (e) {
-    setAuthor(e.target.value)
-  }
-
-  function handleBlogChange (e) {
-    setBlog(e.target.value)
-  }
+  const title = useFormInput(null)
+  const author = useFormInput(null)
+  const blog = useFormInput(null)
 
   function handleSubmit (e) {
     window.location.href = jwt.sign({
-      title,
-      author,
-      blog,
+      title: title.value,
+      author: author.value,
+      blog: blog.value,
       date: Date.now()
     }, 'dlog')
   }
@@ -39,24 +27,21 @@ function New (props) {
             name='title'
             placeholder='Title'
             id='title'
-            value={title}
-            onChange={handleTitleChange}
+            {...title}
           />
           <input
             className='input'
             name='author'
             placeholder='Author'
             id='author'
-            value={author}
-            onChange={handleAuthorChange}
+            {...author}
           />
           <textarea
             className='input'
             name='blog'
             placeholder='Blog'
             id='blog'
-            value={blog}
-            onChange={handleBlogChange}
+            {...blog}
             rows='6'
           />
           <button onClick={handleSubmit}>Submit</button>
@@ -65,6 +50,18 @@ function New (props) {
       <Footer />
     </div>
   )
+}
+
+function useFormInput (initialValue) {
+  const [value, setValue] = useState(initialValue)
+
+  function handleChange (e) {
+    setValue(e.target.value)
+  }
+  return {
+    value,
+    onChange: handleChange
+  }
 }
 
 export default New
